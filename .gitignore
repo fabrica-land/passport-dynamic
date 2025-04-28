@@ -45,7 +45,6 @@ junit.xml
 !/tsconfig.json
 !/tsconfig.dev.json
 !/src/
-/lib
 /dist/
 !/.eslintrc.json
 .idea/
