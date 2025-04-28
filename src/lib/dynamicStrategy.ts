@@ -79,15 +79,22 @@ export class DynamicStrategy extends Strategy {
   }
 
   jwtFromRequest(request: Request) {
-    let jwtToken = null;
-
-    const authHeader = request.headers.authorization;
-
-    if (authHeader) {
-      const bearerSchemeMatches = authHeader.match(this.authHeaderRegex);
-      jwtToken = bearerSchemeMatches ? bearerSchemeMatches[2] : null;
+    let jwtToken: string | null = null;
+    const cookies = (request as any).cookies;
+    if (
+      typeof cookies === 'object' &&
+      !Array.isArray(cookies) &&
+      cookies.DYNAMIC_JWT_TOKEN &&
+      typeof cookies.DYNAMIC_JWT_TOKEN === 'string'
+    ) {
+      jwtToken = cookies.DYNAMIC_JWT_TOKEN;
+    } else {
+      const authHeader = request.headers.authorization;
+      if (authHeader) {
+        const bearerSchemeMatches = authHeader.match(this.authHeaderRegex);
+        jwtToken = bearerSchemeMatches ? bearerSchemeMatches[2] : null;
+      }
     }
-
     return jwtToken;
   }
 }
