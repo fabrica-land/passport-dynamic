@@ -4,7 +4,7 @@ import { Jwt, JwtPayload, Secret } from 'jsonwebtoken';
 import { Strategy } from 'passport-strategy';
 import { verifyToken } from './verifyToken';
 
-interface StrategyOptions {
+export interface StrategyOptions {
   publicKey: string;
 }
 
@@ -79,15 +79,21 @@ export class DynamicStrategy extends Strategy {
   }
 
   jwtFromRequest(request: Request) {
-    let jwtToken = null;
-
-    const authHeader = request.headers.authorization;
-
-    if (authHeader) {
-      const bearerSchemeMatches = authHeader.match(this.authHeaderRegex);
-      jwtToken = bearerSchemeMatches ? bearerSchemeMatches[2] : null;
+    let jwtToken: string | null = null;
+    const cookies = (request as any).cookies;
+    if (
+      typeof cookies === 'object' &&
+      !Array.isArray(cookies) &&
+      cookies.DYNAMIC_JWT_TOKEN
+    ) {
+      jwtToken = String(cookies.DYNAMIC_JWT_TOKEN);
+    } else {
+      const authHeader = request.headers.authorization;
+      if (authHeader) {
+        const bearerSchemeMatches = authHeader.match(this.authHeaderRegex);
+        jwtToken = bearerSchemeMatches ? bearerSchemeMatches[2] : null;
+      }
     }
-
     return jwtToken;
   }
 }

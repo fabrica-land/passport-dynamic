@@ -20,6 +20,7 @@ const project = new typescript.TypeScriptProject({
     'passport',
   ] /* Build dependencies for this module. */,
   // packageName: undefined,  /* The "name" in package.json. */
+  gitignore: ['.idea', '.tool-versions'],
   releaseToNpm: true,
   repository: 'https://github.com/dynamic-labs/passport-dynamic.git',
   npmDistTag: 'latest',
