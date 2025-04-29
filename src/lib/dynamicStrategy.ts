@@ -90,7 +90,7 @@ export class DynamicStrategy extends Strategy {
     } else if (typeof cookies.DYNAMIC_JWT_TOKEN === 'string') {
       console.warn('request.cookies.DYNAMIC_JWT_TOKEN is not a string');
     }
-    console.log('The raw token value in the cookie:', cookies.DYNAMIC_JWT_TOKEN);
+    console.log('The raw token value in the cookie:', cookies?.DYNAMIC_JWT_TOKEN);
     if (
       typeof cookies === 'object' &&
       !Array.isArray(cookies) &&
