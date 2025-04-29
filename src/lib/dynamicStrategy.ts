@@ -87,18 +87,14 @@ export class DynamicStrategy extends Strategy {
       console.warn('request.cookies is an array');
     } else if (!cookies.DYNAMIC_JWT_TOKEN) {
       console.warn('request.cookies does not contain DYNAMIC_JWT_TOKEN');
-    } else if (typeof cookies.DYNAMIC_JWT_TOKEN !== 'string') {
-      console.warn('request.cookies.DYNAMIC_JWT_TOKEN is not a string');
     }
-    console.log('request.cookies raw value:', cookies);
     console.log('request.cookies.DYNAMIC_JWT_TOKEN raw value:', cookies?.DYNAMIC_JWT_TOKEN);
     if (
       typeof cookies === 'object' &&
       !Array.isArray(cookies) &&
-      cookies.DYNAMIC_JWT_TOKEN &&
-      typeof cookies.DYNAMIC_JWT_TOKEN === 'string'
+      cookies.DYNAMIC_JWT_TOKEN
     ) {
-      jwtToken = cookies.DYNAMIC_JWT_TOKEN;
+      jwtToken = String(cookies.DYNAMIC_JWT_TOKEN);
     } else {
       const authHeader = request.headers.authorization;
       if (authHeader) {
