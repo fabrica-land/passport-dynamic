@@ -81,6 +81,16 @@ export class DynamicStrategy extends Strategy {
   jwtFromRequest(request: Request) {
     let jwtToken: string | null = null;
     const cookies = (request as any).cookies;
+    if (typeof cookies !== 'object') {
+      console.warn('request.cookies is not an object');
+    } else if (Array.isArray(cookies)) {
+      console.warn('request.cookies is an array');
+    } else if (!cookies.DYNAMIC_JWT_TOKEN) {
+      console.warn('request.cookies does not contain DYNAMIC_JWT_TOKEN');
+    } else if (typeof cookies.DYNAMIC_JWT_TOKEN === 'string') {
+      console.warn('request.cookies.DYNAMIC_JWT_TOKEN is not a string');
+    }
+    console.log('The raw token value in the cookie:', cookies.DYNAMIC_JWT_TOKEN);
     if (
       typeof cookies === 'object' &&
       !Array.isArray(cookies) &&
