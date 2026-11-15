@@ -27,6 +27,7 @@ const project = new typescript.TypeScriptProject({
   npmDistTag: 'latest',
   npmRegistryUrl: 'https://registry.npmjs.org',
   packageManager: 'npm',
+  workflowNodeVersion: '24.22.3',
 });
 
 // Keep the CA checks in the generator so self-mutation preserves them.
